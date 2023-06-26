@@ -20,7 +20,20 @@ class App extends Component{
   }
 
   buttonClickedHandler=()=>{
-    console.log('click panpanpan');
+    this.setState({
+      eleves:[
+      {
+        nom:"Steve Jobs",
+        moyenne:15,
+        citation:"Allez toujours plus loin"
+      },
+      {
+        nom:'Elon Musk',
+        moyenne:20,
+        citation:"le feu ça brûle et l'eau ça mouille"
+      }
+    ]
+   })
   }
 
   render(){
