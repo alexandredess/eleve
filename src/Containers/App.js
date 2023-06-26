@@ -18,10 +18,19 @@ class App extends Component{
       }
     ]
   }
+
+  buttonClickedHandler=()=>{
+    console.log('click panpanpan');
+  }
+
   render(){
     return(
       <div className="App">
         <h1>bienvenue dans la classe Terre</h1>
+
+        <div>
+          <button onClick={this.buttonClickedHandler}>Mon bouton</button>
+        </div>
 
         <Eleve
           nom={this.state.eleves[0].nom}
