@@ -19,21 +19,18 @@ class App extends Component{
     ]
   }
 
+ 
+
   buttonClickedHandler=()=>{
+    //on reprend le state d'avant et on le met dans la const nouveauState
+    const nouveauState = [...this.state.eleves];
+    //on dit ici que le prénom de la première personne sera "Steve Jobs"
+    nouveauState[0].nom="Steve Jobs"
+    //on envoie ça dans le nouveau state
     this.setState({
-      eleves:[
-      {
-        nom:"Steve Jobs",
-        moyenne:15,
-        citation:"Allez toujours plus loin"
-      },
-      {
-        nom:'Elon Musk',
-        moyenne:20,
-        citation:"le feu ça brûle et l'eau ça mouille"
-      }
-    ]
-   })
+      ...this.state,
+      eleves:nouveauState
+    })
   }
 
   render(){
