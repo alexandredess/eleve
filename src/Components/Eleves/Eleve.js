@@ -31,6 +31,13 @@ function Eleve(props) {
     }else{
         moyenneClasse.push(classes.red)
     }
+
+    let message;
+        
+        if(props.moyenne<6){
+            message=<p>Cet élève va redoubler</p>
+        }
+
     //jsx
     return (
         <div className={classes.eleve}>
@@ -38,6 +45,8 @@ function Eleve(props) {
             <p>Moyenne scolaire : <b className={moyenneClasse.join('')}>{props.moyenne}/20</b></p>
             <p>Age : {Math.floor(Math.random() * 100)}</p>
             <i>{props.children}</i>
+            {message}
+            <button onClick={props.supprimer} style={{marginTop:'5px'}}>Supprimer</button>
         </div>
     );
 }

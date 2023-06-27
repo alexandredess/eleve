@@ -21,18 +21,22 @@ function App(){
 
   const [eleves,setEleves]=useState(
     [{
+      id:1,
       nom:'Eva Dupont',
       moyenne:5,
       citation:"Aller toujours plus loin"
     },
     {
+      id:2,
       nom:'Elon Musk',
-      moyenne:10,
+      moyenne:0,
       citation:"le feu ça brule et l'eau ça mouille"
     }]
   );
 
   const [transformation,setTransformation]=useState(false);
+
+  const [afficherEleve,setAfficherEleve]=useState(true);
 
   useEffect(()=>{
     console.log('[App.js] UseEffect');
@@ -57,10 +61,36 @@ function App(){
     setTransformation(true);
     }
 
+    //méthode pour afficher et masquer les élèves
+  const showHideHandler=()=>{
+    //permet de passer en true et en false => comme un toggle
+    setAfficherEleve(!afficherEleve)
+  }
+
+  //méthode pour supprimer un élève
+  const removeClickHandler= index =>{
+    const nouveauxEleves=[...eleves];
+    nouveauxEleves.splice(index,1);
+    setEleves(nouveauxEleves);
+  }
+
   const h1Style={
     color:'green',
     backgroundColor:'lightgreen'
   }
+
+  let cartes =eleves.map((eleve,index)=>(
+    <Eleve
+      key={index}
+      nom={eleve.nom}
+      moyenne={eleve.moyenne}
+      clic={() => buttonClickedHandler('Thomas Dutronc')}
+      supprimer={()=>removeClickHandler(index)}
+      >
+      {eleve.citation}
+    </Eleve>
+    )
+  );
 
     return(
       <div className={classes.App}>
@@ -69,20 +99,17 @@ function App(){
         <div>
            <MonBoutonSylise transformed={transformation} onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</MonBoutonSylise>
         </div>
+        <div>
+          <MonBoutonSylise onClick={showHideHandler}>Afficher/Masquer</MonBoutonSylise>
+        </div>
 
-        <Eleve
-          nom={eleves[0].nom}
-          moyenne={eleves[0].moyenne}
-          citation={eleves[0].citation}
-          clic={()=>buttonClickedHandler('Steve Jobs')}>
-          
-        </Eleve>
-        <Eleve
-          nom={eleves[1].nom}
-          moyenne={eleves[1].moyenne}
-          citation={eleves[1].citation}
-          clic={()=>buttonClickedHandler('Julie Martin')}>
-          </Eleve>
+        {afficherEleve ?
+          <div>
+            {cartes}
+          </div>
+          :null
+        }
+        
       </div>
   )
 }
