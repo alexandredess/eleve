@@ -1,6 +1,6 @@
-import './App.css';
-import { Component } from 'react';
-import React,{ useState } from 'react';
+import classes from './App.module.css';
+import React,{ useState, useEffect } from 'react';
+
 //import eleve.js
 import Eleve from '../Components/Eleves/Eleve';
 
@@ -19,20 +19,30 @@ function App(){
     }]
   );
 
+  useEffect(()=>{
+    console.log('[App.js] UseEffect');
+
+    return()=>{
+      console.log('[App.js] UseEffect(didUnmount)');
+    }
+  },[]);
+
+  useEffect(()=>{
+    console.log('[App.js] UseEffect(didUpdate)');
+  })
+
   const buttonClickedHandler= nouveauNom =>{
     //on reprend le state d'avant et on le met dans la const nouveauState
-    const nouveauState = [...this.state.eleves];
+    const nouveauxEleves = [...eleves];
     //on dit ici que le prénom de la première personne sera "Steve Jobs"
-    nouveauState[0].nom=nouveauNom
+    nouveauxEleves[0].nom=nouveauNom
     //on envoie ça dans le nouveau state
-    this.setState({
-      ...this.state,
-      eleves:nouveauState
-    })
-  }
+    setEleves(nouveauxEleves);
+    }
+  
 
     return(
-      <div className="App">
+      <div className={classes.App}>
         <h1>bienvenue dans la classe Terre</h1>
 
         <div>
@@ -43,14 +53,14 @@ function App(){
           nom={eleves[0].nom}
           moyenne={eleves[0].moyenne}
           citation={eleves[0].citation}
-          clic={()=>this.buttonClickedHandler('Steve Jobs')}>
+          clic={()=>buttonClickedHandler('Steve Jobs')}>
           
         </Eleve>
         <Eleve
           nom={eleves[1].nom}
           moyenne={eleves[1].moyenne}
           citation={eleves[1].citation}
-          clic={()=>this.buttonClickedHandlerBis('Julie Martin')}>
+          clic={()=>buttonClickedHandler('Julie Martin')}>
           </Eleve>
       </div>
   )
