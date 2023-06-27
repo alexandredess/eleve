@@ -5,6 +5,18 @@ import styledComponent from 'styled-components';
 //import eleve.js
 import Eleve from '../Components/Eleves/Eleve';
 
+const MonBoutonSylise=styledComponent.button
+  //code css
+  `padding : 10px 30px;
+  background-color:${props=>props.transformed?'green':'black'};
+  color:white;
+  cursor:pointer;
+  &:hover{
+    background-color:${props=>props.transformed ? 'lightgreen':'white'};
+    color:${props=>props.transformed?'white':'black'};
+  }
+  `;
+
 function App(){
 
   const [eleves,setEleves]=useState(
@@ -19,6 +31,8 @@ function App(){
       citation:"le feu ça brule et l'eau ça mouille"
     }]
   );
+
+  const [transformation,setTransformation]=useState(false);
 
   useEffect(()=>{
     console.log('[App.js] UseEffect');
@@ -39,6 +53,8 @@ function App(){
     nouveauxEleves[0].nom=nouveauNom
     //on envoie ça dans le nouveau state
     setEleves(nouveauxEleves);
+    //on change l'état du button à true
+    setTransformation(true);
     }
 
   const h1Style={
@@ -46,24 +62,12 @@ function App(){
     backgroundColor:'lightgreen'
   }
 
-  const MonBoutonSylise=styledComponent.button
-  //code css
-  `padding : 10px 30px;
-  background-color:black;
-  color:white;
-  cursor:pointer;
-  &:hover{
-    background-color:white;
-    color:black;
-  }
-  `;
-
     return(
       <div className={classes.App}>
         <h1 style={h1Style}>Bienvenue dans la classe Terre</h1>
 
         <div>
-           <MonBoutonSylise onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</MonBoutonSylise>
+           <MonBoutonSylise transformed={transformation} onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</MonBoutonSylise>
         </div>
 
         <Eleve
