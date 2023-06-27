@@ -1,5 +1,6 @@
 import classes from './App.module.css';
 import React,{ useState, useEffect } from 'react';
+import styledComponent from 'styled-components';
 
 //import eleve.js
 import Eleve from '../Components/Eleves/Eleve';
@@ -9,12 +10,12 @@ function App(){
   const [eleves,setEleves]=useState(
     [{
       nom:'Eva Dupont',
-      moyenne:15,
+      moyenne:5,
       citation:"Aller toujours plus loin"
     },
     {
       nom:'Elon Musk',
-      moyenne:20,
+      moyenne:10,
       citation:"le feu ça brule et l'eau ça mouille"
     }]
   );
@@ -39,14 +40,30 @@ function App(){
     //on envoie ça dans le nouveau state
     setEleves(nouveauxEleves);
     }
-  
+
+  const h1Style={
+    color:'green',
+    backgroundColor:'lightgreen'
+  }
+
+  const MonBoutonSylise=styledComponent.button
+  //code css
+  `padding : 10px 30px;
+  background-color:black;
+  color:white;
+  cursor:pointer;
+  &:hover{
+    background-color:white;
+    color:black;
+  }
+  `;
 
     return(
       <div className={classes.App}>
-        <h1>bienvenue dans la classe Terre</h1>
+        <h1 style={h1Style}>Bienvenue dans la classe Terre</h1>
 
         <div>
-           <button onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</button>
+           <MonBoutonSylise onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</MonBoutonSylise>
         </div>
 
         <Eleve
