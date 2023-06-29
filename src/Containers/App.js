@@ -2,6 +2,11 @@ import classes from './App.module.css';
 import React,{ useState, useEffect, useRef } from 'react';
 import styledComponent from 'styled-components';
 
+//import du provider
+import ThemeContextProvider from '../Context/theme-context';
+//import de search
+import Search from '../Components/Search/Search';
+
 //import du HOC
 import MonFragment from '../HOC/MonFragment/MonFragment';
 
@@ -117,24 +122,31 @@ function App(){
   
 
     return(
-      <div className={classes.App}>
+      <ThemeContextProvider className={classes.App}>
         <h1 style={h1Style}>Bienvenue dans la classe Terre</h1>
+        <div className={classes.display}>
+          <div>
+            <MonBoutonSylise transformed={transformation} onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</MonBoutonSylise>
+          </div>
+          <div>
+            <MonBoutonSylise onClick={showHideHandler}>Afficher/Masquer</MonBoutonSylise>
+          </div>
+        </div>
+        
 
-        <div>
-           <MonBoutonSylise transformed={transformation} onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</MonBoutonSylise>
-        </div>
-        <div>
-          <MonBoutonSylise onClick={showHideHandler}>Afficher/Masquer</MonBoutonSylise>
-        </div>
+        <Search/>
 
         {afficherEleve ?
           <MonFragment>
+          <div className={classes.display}>
             {cartes}
+          </div>
+            
           </MonFragment>
           :null
         }
         
-      </div>
+      </ThemeContextProvider>
   )
 }
 
