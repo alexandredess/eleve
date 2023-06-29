@@ -1,6 +1,9 @@
 import classes from './App.module.css';
-import React,{ useState, useEffect } from 'react';
+import React,{ useState, useEffect, useRef } from 'react';
 import styledComponent from 'styled-components';
+
+//import du HOC
+import MonFragment from '../HOC/MonFragment/MonFragment';
 
 //import eleve.js
 import Eleve from '../Components/Eleves/Eleve';
@@ -50,15 +53,17 @@ function App(){
     console.log('[App.js] UseEffect(didUpdate)');
   })
 
-  const buttonClickedHandler= nouveauNom =>{
+  const buttonClickedHandler= (nouveauNom,index) =>{
     //on reprend le state d'avant et on le met dans la const nouveauState
     const nouveauxEleves = [...eleves];
     //on dit ici que le prénom de la première personne sera "Steve Jobs"
-    nouveauxEleves[0].nom=nouveauNom
+    nouveauxEleves[index]=nouveauNom;
     //on envoie ça dans le nouveau state
     setEleves(nouveauxEleves);
     //on change l'état du button à true
     setTransformation(true);
+    //faire le focus sur l'input
+    elementInput.current.focus();
     }
 
     //méthode pour afficher et masquer les élèves
@@ -74,23 +79,42 @@ function App(){
     setEleves(nouveauxEleves);
   }
 
+  //modification du nom
+  const nameChangedHandler = (event,index)=>{
+    const nouveauxEleves=[...eleves];
+    nouveauxEleves[index].nom = event.target.value;
+    setEleves(nouveauxEleves);
+  }
+
   const h1Style={
     color:'green',
     backgroundColor:'lightgreen'
   }
 
-  let cartes =eleves.map((eleve,index)=>(
+  const elementInput = useRef(null);
+
+  let cartes = eleves.map((eleve,index)=>{
+    let maVariableRef=null
+    if(index === 0){
+    maVariableRef= elementInput;
+    }
+    return (
     <Eleve
-      key={index}
-      nom={eleve.nom}
-      moyenne={eleve.moyenne}
-      clic={() => buttonClickedHandler('Thomas Dutronc')}
-      supprimer={()=>removeClickHandler(index)}
-      >
-      {eleve.citation}
+    key={index}
+    nom={eleve.nom}
+    moyenne={eleve.moyenne}
+    clic={() => buttonClickedHandler('Thomas Dutronc',index)}
+    supprimer={()=>removeClickHandler(index)}
+    changerNom={(e)=>nameChangedHandler(e,index)}
+    maRef={maVariableRef}
+    >
+    {eleve.citation}
     </Eleve>
-    )
-  );
+    );
+    });
+    
+
+  
 
     return(
       <div className={classes.App}>
@@ -104,9 +128,9 @@ function App(){
         </div>
 
         {afficherEleve ?
-          <div>
+          <MonFragment>
             {cartes}
-          </div>
+          </MonFragment>
           :null
         }
         
