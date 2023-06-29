@@ -1,17 +1,17 @@
-import classes from './App.module.css';
+import classes from './Ecole.css';
 import React,{ useState, useEffect, useRef } from 'react';
 import styledComponent from 'styled-components';
 
 //import du provider
-import ThemeContextProvider from '../Context/theme-context';
+import ThemeContextProvider from '../../Context/theme-context';
 //import de search
-import Search from '../Components/Search/Search';
+import Search from '../../Components/Search/Search';
 
 //import du HOC
-import MonFragment from '../HOC/MonFragment/MonFragment';
+import MonFragment from '../../HOC/MonFragment/MonFragment';
 
 //import eleve.js
-import Eleve from '../Components/Eleves/Eleve';
+import Eleve from '../../Components/Eleves/Eleve';
 
 const MonBoutonSylise=styledComponent.button
   //code css
@@ -25,7 +25,7 @@ const MonBoutonSylise=styledComponent.button
   }
   `;
 
-function App(){
+function Ecole(){
 
   const [eleves,setEleves]=useState(
     [{
@@ -93,7 +93,12 @@ function App(){
 
   const h1Style={
     color:'green',
-    backgroundColor:'lightgreen'
+    backgroundColor:'lightgreen',
+    textAlign:'center'
+  }
+  const display={
+    display:'flex',
+    justifyContent:"center"
   }
 
   const elementInput = useRef(null);
@@ -123,8 +128,8 @@ function App(){
 
     return(
       <ThemeContextProvider className={classes.App}>
-        <h1 style={h1Style}>Bienvenue dans la classe Terre</h1>
-        <div className={classes.display}>
+        <h1 style={h1Style} >Bienvenue dans la classe Terre</h1>
+        <div style={display}>
           <div>
             <MonBoutonSylise transformed={transformation} onClick={buttonClickedHandler.bind(this,"Elon Musk")}>Transformer le premier élève</MonBoutonSylise>
           </div>
@@ -138,7 +143,7 @@ function App(){
 
         {afficherEleve ?
           <MonFragment>
-          <div className={classes.display}>
+          <div style={display}>
             {cartes}
           </div>
             
@@ -152,4 +157,4 @@ function App(){
 
 
 
-export default App;
+export default Ecole;
